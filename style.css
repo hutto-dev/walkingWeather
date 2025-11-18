@@ -1,0 +1,78 @@
+:root {
+  --font-heading: "Momo Trust Display", sans-serif;
+  --font-main: "Open Sans", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: #4bcdff;
+  font-family: var(--font-main);
+}
+
+header {
+  display: flex;
+}
+
+.header-city {
+  font-family: var(--font-heading);
+}
+
+.header-date {
+}
+
+.result-container {
+}
+
+.result-word {
+}
+
+.daily-summary-container {
+}
+
+.temp-sky-wind {
+}
+
+.daily-summary-p {
+}
+
+.daily-numbers-container {
+}
+
+.current-info {
+}
+
+.icon {
+}
+
+.number-info {
+}
+
+.type-info {
+}
+
+.weekly-forecast-container {
+}
+
+.weekly-forecast-title {
+}
+
+.daily-boxes-container {
+}
+
+.daily-box {
+}
+
+.daily-box-temp {
+}
+
+.daily-box-icon {
+}
+
+.daily-box-date {
+}
