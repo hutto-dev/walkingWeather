@@ -45,33 +45,34 @@ header {
 main {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 30px;
 }
 
 /* fix gap between header and main */
 
 .result-container {
   text-align: center;
-  padding-top: 2em;
+  padding-top: 3em;
 }
 
 .result-word {
-  font-size: 7rem;
+  font-size: 9rem;
 }
 
 .daily-summary-container {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 10px;
 }
 
 .temp-sky-wind {
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 
 .daily-summary-p {
   font-size: 0.75rem;
   text-align: start;
+  font-weight: 600;
 }
 
 .daily-numbers-container {
@@ -88,6 +89,7 @@ main {
 }
 
 .icon {
+  margin-bottom: 10px;
 }
 
 .number-info {
@@ -95,19 +97,32 @@ main {
 }
 
 .type-info {
-  font-size: 0.75rem;
+  font-size: 0.6rem;
+  color: #5696ae;
 }
 
 .weekly-forecast-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .weekly-forecast-title {
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
 .daily-boxes-container {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
 }
 
 .daily-box {
+  text-align: center;
+  border: 3px solid black;
+  border-radius: 12px;
+  padding: 1em 0.3em;
 }
 
 .daily-box-temp {
@@ -117,4 +132,6 @@ main {
 }
 
 .daily-box-date {
+  font-size: 0.6rem;
+  font-weight: bold;
 }
