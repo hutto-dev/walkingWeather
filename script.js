@@ -1,7 +1,7 @@
 // UNIVERSAL LOGIC
-const temp = 33;
-const sky = "Rain";
-const wind = 21;
+const temp = 21;
+const sky = "Snow";
+const wind = 5;
 
 // HEADER LOGIC
 
@@ -87,3 +87,25 @@ function changeIconInfo() {
 }
 
 changeIconInfo();
+
+//WEEKLY FORECAST LOGIC
+const futureDates = [
+  document.getElementById("date-1"),
+  document.getElementById("date-2"),
+  document.getElementById("date-3"),
+  document.getElementById("date-4"),
+];
+
+function weeklyDates(offset) {
+  const date = new Date();
+  date.setDate(date.getDate() + offset);
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+  });
+}
+
+futureDates.forEach((date, index) => {
+  const sample = (date.textContent = weeklyDates(index + 1));
+  console.log(sample);
+});
