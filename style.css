@@ -61,7 +61,7 @@ main {
 .daily-summary-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
 }
 
 .temp-sky-wind {

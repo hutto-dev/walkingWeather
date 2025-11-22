@@ -1,7 +1,31 @@
-// UNIVERSAL LOGIC
-const temp = 5;
-const sky = "Snow";
-const wind = 10;
+let temp;
+let sky;
+let wind;
+let description;
+
+// API LOGIC
+
+async function getWeather() {
+  const apiKey = "b95006171527bc6aa7da23b8a745c857";
+  const weatherAPI = `https://api.openweathermap.org/data/2.5/weather?q=Harpers%20Ferry,US&units=imperial&appid=${apiKey}`;
+
+  const response = await fetch(weatherAPI);
+  const data = await response.json();
+
+  sky = data.weather[0].main;
+  temp = Math.round(data.main.temp);
+  wind = data.wind.speed;
+  description = data.weather[0].description;
+  description = description.charAt(0).toUpperCase() + description.slice(1);
+  console.log(description);
+
+  setWord();
+  changeOverView();
+  overviewSummary.textContent = getWalkingRules(sky, wind, temp);
+  changeIconInfo();
+}
+
+getWeather();
 
 // HEADER LOGIC
 
@@ -34,10 +58,12 @@ setWord();
 // OVERVIEW LOGIC
 
 const overviewTitle = document.getElementById("temp-sky-wind");
+const apiDescription = document.getElementById("api-description");
 const overviewSummary = document.getElementById("daily-summary-p");
 
 function changeOverView() {
   overviewTitle.textContent = `${temp}° // ${sky} // ${wind}mph wind`;
+  apiDescription.textContent = description;
 }
 
 changeOverView();
@@ -52,92 +78,92 @@ const rules = [
   // SUNNY RULES
 
   {
-    condition: (sky, wind, temp) => sky === "Sunny" && wind < 20 && temp >= 50,
+    condition: (sky, wind, temp) => sky === "Clear" && wind < 20 && temp >= 50,
     message:
       "Now it seems that today is a GREAT day to walk! Today is the day the Lord has made so let us rejoice and be glad. Let's not be lazy little dorks and just go for a walk.",
   },
   {
     condition: (sky, wind, temp) =>
-      sky === "Sunny" && isBetween(wind, 20, 30) && temp >= 50,
+      sky === "Clear" && isBetween(wind, 20, 30) && temp >= 50,
     message: "Boy oh boy..sunny but don't blow away!",
   },
   {
     condition: (sky, wind, temp) =>
-      sky === "Sunny" && isBetween(wind, 30, 40) && temp >= 50,
+      sky === "Clear" && isBetween(wind, 30, 40) && temp >= 50,
     message: "May not be a good idea but you could always get a tan",
   },
   {
-    condition: (sky, wind, temp) => sky === "Sunny" && wind > 40 && temp >= 50,
+    condition: (sky, wind, temp) => sky === "Clear" && wind > 40 && temp >= 50,
     message: "LOL..WHY ARE YOU WALKING IN THE TORNADO",
   },
   {
     condition: (sky, wind, temp) =>
-      sky === "Sunny" && isBetween(wind, 0, 40) && temp < 20,
+      sky === "Clear" && isBetween(wind, 0, 40) && temp < 20,
     message: "Freezing out here...no",
   },
   {
-    condition: (sky, wind, temp) => sky === "Sunny" && wind < 20 && temp <= 50,
+    condition: (sky, wind, temp) => sky === "Clear" && wind < 20 && temp <= 50,
     message:
       "Now it seems that today is a GOOD day to walk! It's maybe a little chilly but who cares! GO WALK!",
   },
   {
     condition: (sky, wind, temp) =>
-      sky === "Sunny" && isBetween(wind, 20, 30) && temp <= 50,
+      sky === "Clear" && isBetween(wind, 20, 30) && temp <= 50,
     message: "Not the warmest out here & it's a little windy..bundle up!",
   },
   {
     condition: (sky, wind, temp) =>
-      sky === "Sunny" && isBetween(wind, 30, 40) && temp <= 50,
+      sky === "Clear" && isBetween(wind, 30, 40) && temp <= 50,
     message: "You're probably cold and you need to go home if you're walking",
   },
   {
-    condition: (sky, wind, temp) => sky === "Sunny" && wind > 40 && temp <= 50,
+    condition: (sky, wind, temp) => sky === "Clear" && wind > 40 && temp <= 50,
     message: "LOL..WHY ARE YOU WALKING IN THE TORNADO & IT'S COLD!!",
   },
 
-  // CLOUDY RULES
+  // CLOUDS RULES
 
   {
-    condition: (sky, wind, temp) => sky === "Cloudy" && wind < 20 && temp >= 50,
+    condition: (sky, wind, temp) => sky === "Clouds" && wind < 20 && temp >= 50,
     message:
       "Sun's not out...gun's not out..but you can still walk! It's a very nice day out if I say so myself",
   },
   {
     condition: (sky, wind, temp) =>
-      sky === "Cloudy" && isBetween(wind, 20, 30) && temp >= 50,
+      sky === "Clouds" && isBetween(wind, 20, 30) && temp >= 50,
     message: "Cloudy and windy?? Hmmm. Just go walk",
   },
   {
     condition: (sky, wind, temp) =>
-      sky === "Cloudy" && isBetween(wind, 30, 40) && temp >= 50,
+      sky === "Clouds" && isBetween(wind, 30, 40) && temp >= 50,
     message: "Dark & Windy?? Who knows! Walk if you want!",
   },
   {
-    condition: (sky, wind, temp) => sky === "Cloudy" && wind > 40 && temp >= 50,
+    condition: (sky, wind, temp) => sky === "Clouds" && wind > 40 && temp >= 50,
     message: "LOL go inside",
   },
   {
     condition: (sky, wind, temp) =>
-      sky === "Cloudy" && isBetween(wind, 0, 40) && temp < 20,
+      sky === "Clouds" && isBetween(wind, 0, 40) && temp < 20,
     message: "Cloudy & Cold? Go play Stardew Valley",
   },
   {
-    condition: (sky, wind, temp) => sky === "Cloudy" && wind < 20 && temp <= 50,
+    condition: (sky, wind, temp) => sky === "Clouds" && wind < 20 && temp <= 50,
     message: "Cloudy & cool 😎 just like you. Bundle up and walk!",
   },
   {
     condition: (sky, wind, temp) =>
-      sky === "Cloudy" && isBetween(wind, 20, 30) && temp <= 50,
+      sky === "Clouds" && isBetween(wind, 20, 30) && temp <= 50,
     message:
       "Now this is little cold...please bring your jacket for once in your life",
   },
   {
     condition: (sky, wind, temp) =>
-      sky === "Cloudy" && isBetween(wind, 30, 40) && temp <= 50,
+      sky === "Clouds" && isBetween(wind, 30, 40) && temp <= 50,
     message: "Probably not...lol",
   },
   {
-    condition: (sky, wind, temp) => sky === "Cloudy" && wind > 40 && temp <= 50,
+    condition: (sky, wind, temp) => sky === "Clouds" && wind > 40 && temp <= 50,
     message: "Please don't tell me you're walking in this...",
   },
 
@@ -235,9 +261,9 @@ function changeIconInfo() {
   }
   tempInfo.textContent = `${temp}°`;
 
-  if (sky === "Sunny") {
+  if (sky === "Clear") {
     skyIcon.src = "./images/blue icons/sun-blue.svg";
-  } else if (sky === "Cloudy") {
+  } else if (sky === "Clouds") {
     skyIcon.src = "./images/blue icons/cloudy-blue.svg";
   } else if (sky === "Rain") {
     skyIcon.src = "./images/blue icons/rain-blue.svg";
