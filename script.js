@@ -7,17 +7,25 @@ let description;
 
 async function getWeather() {
   const apiKey = "b95006171527bc6aa7da23b8a745c857";
+
   const weatherAPI = `https://api.openweathermap.org/data/2.5/weather?q=Harpers%20Ferry,US&units=imperial&appid=${apiKey}`;
+  const weatherResponse = await fetch(weatherAPI);
+  const weatherData = await weatherResponse.json();
 
-  const response = await fetch(weatherAPI);
-  const data = await response.json();
+  const forecastAPI = `https://api.openweathermap.org/data/2.5/forecast?q=Harpers%20Ferry,US&units=imperial&appid=${apiKey}`;
+  const forecastResponse = await fetch(forecastAPI);
+  const forecastData = await forecastResponse.json();
 
-  sky = data.weather[0].main;
-  temp = Math.round(data.main.temp);
-  wind = data.wind.speed;
-  description = data.weather[0].description;
+  console.log(forecastData.list[1].main.temp);
+
+  // UPDATE WEATHER INFO
+  sky = weatherData.weather[0].main;
+  temp = Math.round(weatherData.main.temp);
+  wind = weatherData.wind.speed;
+  description = weatherData.weather[0].description;
   description = description.charAt(0).toUpperCase() + description.slice(1);
-  console.log(description);
+
+  // UPDATE FORECASE INFO
 
   setWord();
   changeOverView();
@@ -278,12 +286,22 @@ changeIconInfo();
 
 //WEEKLY FORECAST LOGIC
 
+const futureTemp = [
+  document.getElementById("temp-one"),
+  document.getElementById("temp-two"),
+  document.getElementById("temp-three"),
+  document.getElementById("temp-four"),
+];
+
 const futureDates = [
   document.getElementById("date-one"),
   document.getElementById("date-two"),
   document.getElementById("date-three"),
   document.getElementById("date-four"),
 ];
+
+// get weather name: clear, clouds, rain, snow
+// if that is that, textContent -> that source icon
 
 function getFutureDates(offset) {
   const date = new Date();
