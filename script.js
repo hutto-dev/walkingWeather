@@ -44,14 +44,20 @@ async function getWeather() {
 
   // UPDATE FORECAST ICON
 
-  nextFourDays.forEach((i) => {
-    i.find((item) => {
-      const description = item.weather.main;
-    });
-    if (description === "Clear") {
-      console.log("it worked!");
-    }
-  });
+  // nextFourDays
+
+  // nextFourDays.forEach((i) => {
+  //   i.find((item) => {
+  //     const description = item.weather.main;
+  //   });
+  //   if (description === "Clear") {
+  //     console.log("it worked!");
+  //   }
+  // });
+
+  // nextFourDays.forEach((i) => {
+
+  // })
 
   console.log(nextFourDays);
 
