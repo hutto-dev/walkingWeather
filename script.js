@@ -2,6 +2,10 @@ let temp;
 let sky;
 let wind;
 let description;
+let tomorrow;
+let dayTwo;
+let dayThree;
+let dayFour;
 
 // API LOGIC
 
@@ -25,12 +29,37 @@ async function getWeather() {
   description = weatherData.weather[0].description;
   description = description.charAt(0).toUpperCase() + description.slice(1);
 
-  // UPDATE FORECASE INFO
+  // UPDATE FORECAST INFO
+  const forecastList = forecastData.list;
+  const nextFourDays = forecastList
+    .filter((item) => {
+      return item.dt_txt.includes("12:00:00");
+    })
+    .slice(0, 4);
+
+  tomorrow = Math.round(nextFourDays[0].main.temp);
+  dayTwo = Math.round(nextFourDays[1].main.temp);
+  dayThree = Math.round(nextFourDays[2].main.temp);
+  dayFour = Math.round(nextFourDays[3].main.temp);
+
+  // UPDATE FORECAST ICON
+
+  nextFourDays.forEach((i) => {
+    i.find((item) => {
+      const description = item.weather.main;
+    });
+    if (description === "Clear") {
+      console.log("it worked!");
+    }
+  });
+
+  console.log(nextFourDays);
 
   setWord();
   changeOverView();
   overviewSummary.textContent = getWalkingRules(sky, wind, temp);
   changeIconInfo();
+  getFutureTemp();
 }
 
 getWeather();
@@ -285,13 +314,17 @@ function changeIconInfo() {
 changeIconInfo();
 
 //WEEKLY FORECAST LOGIC
+function getFutureTemp() {
+  const tomorrowTemp = document.getElementById("temp-one");
+  const dayTwoTemp = document.getElementById("temp-two");
+  const dayThreeTemp = document.getElementById("temp-three");
+  const dayFourTemp = document.getElementById("temp-four");
 
-const futureTemp = [
-  document.getElementById("temp-one"),
-  document.getElementById("temp-two"),
-  document.getElementById("temp-three"),
-  document.getElementById("temp-four"),
-];
+  tomorrowTemp.textContent = `${tomorrow}`;
+  dayTwoTemp.textContent = `${dayTwo}`;
+  dayThreeTemp.textContent = `${dayThree}`;
+  dayFourTemp.textContent = `${dayFour}`;
+}
 
 const futureDates = [
   document.getElementById("date-one"),
@@ -315,3 +348,9 @@ function getFutureDates(offset) {
 futureDates.forEach((date, index) => {
   date.textContent = getFutureDates(index + 1);
 });
+
+// UNUSED CODE BUT LEARNED SOMETHING
+
+//   const tomorrow = forecastList.find((item) => {
+//     return item.dt_txt.includes("12:00:00");
+//   });
