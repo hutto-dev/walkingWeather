@@ -6,6 +6,10 @@ let tomorrow;
 let dayTwo;
 let dayThree;
 let dayFour;
+let tomorrowIcon;
+let dayTwoIcon;
+let dayThreeIcon;
+let dayFourIcon;
 
 // API LOGIC
 
@@ -19,8 +23,6 @@ async function getWeather() {
   const forecastAPI = `https://api.openweathermap.org/data/2.5/forecast?q=Harpers%20Ferry,US&units=imperial&appid=${apiKey}`;
   const forecastResponse = await fetch(forecastAPI);
   const forecastData = await forecastResponse.json();
-
-  console.log(forecastData.list[1].main.temp);
 
   // UPDATE WEATHER INFO
   sky = weatherData.weather[0].main;
@@ -37,35 +39,25 @@ async function getWeather() {
     })
     .slice(0, 4);
 
-  tomorrow = Math.round(nextFourDays[0].main.temp);
-  dayTwo = Math.round(nextFourDays[1].main.temp);
-  dayThree = Math.round(nextFourDays[2].main.temp);
-  dayFour = Math.round(nextFourDays[3].main.temp);
+  tomorrow = `${Math.round(nextFourDays[0].main.temp)}°`;
+  dayTwo = `${Math.round(nextFourDays[1].main.temp)}°`;
+  dayThree = `${Math.round(nextFourDays[2].main.temp)}°`;
+  dayFour = `${Math.round(nextFourDays[3].main.temp)}°`;
 
+  ////////////////// working through this now
   // UPDATE FORECAST ICON
 
-  // nextFourDays
-
-  // nextFourDays.forEach((i) => {
-  //   i.find((item) => {
-  //     const description = item.weather.main;
-  //   });
-  //   if (description === "Clear") {
-  //     console.log("it worked!");
-  //   }
-  // });
-
-  // nextFourDays.forEach((i) => {
-
-  // })
-
-  console.log(nextFourDays);
+  tomorrowIcon = nextFourDays[0].weather[0].main;
+  dayTwoIcon = nextFourDays[1].weather[0].main;
+  dayThreeIcon = nextFourDays[2].weather[0].main;
+  dayFourIcon = nextFourDays[3].weather[0].main;
 
   setWord();
   changeOverView();
   overviewSummary.textContent = getWalkingRules(sky, wind, temp);
   changeIconInfo();
   getFutureTemp();
+  getFutureIcons();
 }
 
 getWeather();
@@ -89,7 +81,7 @@ getDate();
 const resultWord = document.getElementById("result-word");
 
 function setWord() {
-  if (temp < 20 || wind >= 30 || sky === "Rain" || sky === "Snow") {
+  if (temp < 32 || wind >= 30 || sky === "Rain" || sky === "Snow") {
     resultWord.textContent = "No.";
   } else {
     resultWord.textContent = "YES!";
@@ -330,6 +322,35 @@ function getFutureTemp() {
   dayTwoTemp.textContent = `${dayTwo}`;
   dayThreeTemp.textContent = `${dayThree}`;
   dayFourTemp.textContent = `${dayFour}`;
+}
+
+function getFutureIcons() {
+  const iconOne = document.getElementById("icon-one");
+  const iconTwo = document.getElementById("icon-two");
+  const iconThree = document.getElementById("icon-three");
+  const iconFour = document.getElementById("icon-four");
+
+  const futureIcons = [iconOne, iconTwo, iconThree, iconFour];
+  const skyForecast = [tomorrowIcon, dayTwoIcon, dayThreeIcon, dayFourIcon];
+
+  console.log(skyForecast);
+
+  let weatherIcon;
+
+  futureIcons.forEach((icon) => {
+    skyForecast.forEach((sky) => {
+      if (sky === "Clear") {
+        weatherIcon = "./images/black icons/sun-black.svg";
+      } else if (sky === "Clouds") {
+        weatherIcon = "./images/black icons/cloudy-black.svg";
+      } else if (sky === "Rain") {
+        weatherIcon = "./images/black icons/rain-black.svg";
+      } else if (sky === "Snow") {
+        weatherIcon = "./images/black icons/snow-black.svg";
+      }
+    });
+    icon.src = weatherIcon;
+  });
 }
 
 const futureDates = [
