@@ -6,10 +6,7 @@ let tomorrow;
 let dayTwo;
 let dayThree;
 let dayFour;
-let tomorrowIcon;
-let dayTwoIcon;
-let dayThreeIcon;
-let dayFourIcon;
+let skyForecastAPI;
 
 // API LOGIC
 
@@ -47,10 +44,12 @@ async function getWeather() {
   ////////////////// working through this now
   // UPDATE FORECAST ICON
 
-  tomorrowIcon = nextFourDays[0].weather[0].main;
-  dayTwoIcon = nextFourDays[1].weather[0].main;
-  dayThreeIcon = nextFourDays[2].weather[0].main;
-  dayFourIcon = nextFourDays[3].weather[0].main;
+  skyForecastAPI = [
+    nextFourDays[0].weather[0].main,
+    nextFourDays[1].weather[0].main,
+    nextFourDays[2].weather[0].main,
+    nextFourDays[3].weather[0].main,
+  ];
 
   setWord();
   changeOverView();
@@ -325,31 +324,19 @@ function getFutureTemp() {
 }
 
 function getFutureIcons() {
-  const iconOne = document.getElementById("icon-one");
-  const iconTwo = document.getElementById("icon-two");
-  const iconThree = document.getElementById("icon-three");
-  const iconFour = document.getElementById("icon-four");
+  const weatherIcons = {
+    Clear: "./images/black icons/sun-black.svg",
+    Clouds: "./images/black icons/cloudy-black.svg",
+    Rain: "./images/black icons/rain-black.svg",
+    Snow: "./images/black icons/snow-black.svg",
+  };
 
-  const futureIcons = [iconOne, iconTwo, iconThree, iconFour];
-  const skyForecast = [tomorrowIcon, dayTwoIcon, dayThreeIcon, dayFourIcon];
+  const iconPlaceholders = document.querySelectorAll(".daily-box-icon");
 
-  console.log(skyForecast);
-
-  let weatherIcon;
-
-  futureIcons.forEach((icon) => {
-    skyForecast.forEach((sky) => {
-      if (sky === "Clear") {
-        weatherIcon = "./images/black icons/sun-black.svg";
-      } else if (sky === "Clouds") {
-        weatherIcon = "./images/black icons/cloudy-black.svg";
-      } else if (sky === "Rain") {
-        weatherIcon = "./images/black icons/rain-black.svg";
-      } else if (sky === "Snow") {
-        weatherIcon = "./images/black icons/snow-black.svg";
-      }
-    });
-    icon.src = weatherIcon;
+  iconPlaceholders.forEach((item, index) => {
+    const apiCondition = skyForecastAPI[index];
+    const iconImage = weatherIcons[apiCondition];
+    item.src = iconImage;
   });
 }
 
